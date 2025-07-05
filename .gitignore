@@ -1,0 +1,12 @@
+# Ignore all .env files
+**/.env
+
+# Ignore keys folder (for backend)
+gemini-backend/keys/
+
+# Ignore node_modules in both frontend and backend
+gemini-chatbot/node_modules/
+gemini-backend/node_modules/
+
+# Optional: ignore build folders if created
+gemini-chatbot/build/
