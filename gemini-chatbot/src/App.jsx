@@ -3,9 +3,20 @@ import "./App.css";
 
 function App() {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    {
+      text: "👋 Hi! I'm Gemini. Ask me anything or try one of the examples below.",
+      sender: "bot",
+    },
+  ]);
   const [loading, setLoading] = useState(false);
   const chatRef = useRef(null);
+
+  const suggestions = [
+    "Summarize this paragraph: AI is transforming the world...",
+    "Explain quantum computing in simple words",
+    "Draft a professional email to HR for leave",
+  ];
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -40,7 +51,16 @@ function App() {
   };
 
   const resetChat = () => {
-    setMessages([]);
+    setMessages([
+      {
+        text: "👋 Hi! I'm Gemini. Ask me anything or try one of the examples below.",
+        sender: "bot",
+      },
+    ]);
+  };
+
+  const handleSuggestionClick = (text) => {
+    setInput(text);
   };
 
   useEffect(() => {
@@ -63,16 +83,30 @@ function App() {
           {messages.map((msg, idx) => (
             <div key={idx} className={`message-row ${msg.sender}`}>
               {msg.sender === "bot" && <div className="avatar">🤖</div>}
-              <div className="bubble">{msg.text}</div>
+              <div className={`bubble ${msg.sender}`}>{msg.text}</div>
             </div>
           ))}
           {loading && (
             <div className="message-row bot">
               <div className="avatar">🤖</div>
-              <div className="bubble">⏳ Typing...</div>
+              <div className="bubble bot">⏳ Typing...</div>
             </div>
           )}
         </div>
+
+        {messages.length === 1 && (
+          <div className="suggestions">
+            {suggestions.map((sugg, idx) => (
+              <div
+                key={idx}
+                className="suggestion"
+                onClick={() => handleSuggestionClick(sugg)}
+              >
+                💡 {sugg}
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="input-area">
           <input
